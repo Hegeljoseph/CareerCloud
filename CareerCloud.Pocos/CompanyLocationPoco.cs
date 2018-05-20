@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CareerCloud.Pocos
 {
-    class CompanyLocationPoco
+    [Table("Company_Locations")]
+    public class CompanyLocationPoco
     {
     }
 }
