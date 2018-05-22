@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,16 @@ namespace CareerCloud.Pocos
     [Table("Security_Logins_Roles")]
     public class SecurityLoginsRolePoco
     {
+        [Key]
+        public Guid Id { get; set; }
+        /*
+         *Login
+         *Role
+         *
+         */
+
+        [Column("Time_Stamp")]
+        public byte[] TimeStamp { get; set; }
+
     }
 }
