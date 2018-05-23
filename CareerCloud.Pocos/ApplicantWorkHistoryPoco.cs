@@ -14,18 +14,33 @@ namespace CareerCloud.Pocos
         [Key]
         public Guid Id { get; set; }
 
-        /*
-         * Applicant
-         * Company_Name
-         * Country_Code
-         *Location
-         *Job_Title
-         *Job_Description
-         *Start_Month
-         *Start_Year
-         *End_Month
-         *End_Year
-         */
+        public Guid Applicant { get; set; }
+
+        [Column("Company_Name")]
+        public string CompanyName { get; set; }
+
+        [Column("Country_Code")]
+        public string CountryCode { get; set; }
+
+        public string Location { get; set; }
+
+        [Column("Job_Title")]
+        public string JobTitle { get; set; }
+
+        [Column("JobDescription")]
+        public string JobDescription { get; set; }
+
+        [Column("Start_Month")]
+        public byte StartMonth { get; set; }
+
+        [Column("Start_Year")]
+        public int StartYear { get; set; }
+
+        [Column("End_Month")]
+        public byte EndMonth { get; set; }
+         
+        [Column("End_Year")]
+        public int EndYear { get; set; }
 
         [Column("Time_Stamp")]
         public byte[] TimeStamp { get; set; }

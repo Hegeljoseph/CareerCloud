@@ -13,13 +13,17 @@ namespace CareerCloud.Pocos
     {
         [Key]
         public Guid Id { get; set; }
-        /*
-         * Company
-         *Profile_Created
-         *Is_Inactive
-         *Is_Company_Hidden
-         *
-         */
+
+        public Guid Company { get; set; }
+
+        [Column("Profile_Created")]
+        public DateTime ProfileCreated { get; set; }
+
+        [Column("Is_Inactive")]
+        public bool IsInactive { get; set; }
+
+        [Column("Is_Company_Hidden")]
+        public bool IsCompanyHidden { get; set; }
 
         [Column("Time_Stamp")]
         public byte[] TimeStamp { get; set; }

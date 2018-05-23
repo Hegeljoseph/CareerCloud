@@ -14,12 +14,10 @@ namespace CareerCloud.Pocos
         [Key]
         public Guid LanguageID { get; set; }
 
-        /*
-         * Name
-         *Native_Name
-         */
-        [Column("Time_Stamp")]
-        public byte[] TimeStamp { get; set; }
+        public string Name { get; set; }
+
+        [Column("Native_Name")]
+        public string NativeName { get; set; }
 
     }
 }

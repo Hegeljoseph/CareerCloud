@@ -7,6 +7,9 @@ namespace CareerCloud.Pocos
     [Table("Applicant_Profiles")]
     public class ApplicantProfilePoco
     {
+        [Key]
+        public Guid Id { get; set; }
+
         public Guid Login { get; set; }
 
         [Column("Current_Salary")]

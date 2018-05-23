@@ -14,12 +14,14 @@ namespace CareerCloud.Pocos
         [Key]
         public Guid Id { get; set; }
 
-        /*
-         *Job
-         *Skill
-         *Skill_Level
-         *Importance
-         */
+        public Guid Job { get; set; }
+
+        public string Skill { get; set; }
+
+        [Column("Skill_Level")]
+        public string SkillLevel { get; set; }
+
+        public int Importance { get; set; }
 
         [Column("Time_Stamp")]
         public byte[] TimeStamp { get; set; }

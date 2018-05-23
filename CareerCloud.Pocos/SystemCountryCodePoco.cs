@@ -11,10 +11,9 @@ namespace CareerCloud.Pocos
     [Table("System_Country_Codes")]
     public class SystemCountryCodePoco
     {
-        /*
-         * Code
-         * Name
-         */
+        public string Code { get; set; }
 
+        public string Name { get; set; }
+        
     }
 }
