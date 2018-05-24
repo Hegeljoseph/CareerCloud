@@ -13,10 +13,10 @@ namespace CareerCloud.Pocos
         public Guid Login { get; set; }
 
         [Column("Current_Salary")]
-        public decimal CurrentSalary { get; set; }
+        public decimal? CurrentSalary { get; set; }
 
         [Column("Current_Rate")]
-        public decimal CurrentRate { get; set; }
+        public decimal? CurrentRate { get; set; }
 
         public string Currency { get; set; }
 
