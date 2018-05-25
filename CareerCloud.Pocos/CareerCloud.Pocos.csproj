@@ -11,6 +11,7 @@
     <AssemblyName>CareerCloud.Pocos</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +51,7 @@
     <Compile Include="CompanyDescriptionPoco.cs" />
     <Compile Include="CompanyJobEducationPoco.cs" />
     <Compile Include="CompanyJobPoco.cs" />
-    <Compile Include="CompanyJobsDescriptionPoco.cs" />
+    <Compile Include="CompanyJobDescriptionPoco.cs" />
     <Compile Include="CompanyJobSkillPoco.cs" />
     <Compile Include="CompanyLocationPoco.cs" />
     <Compile Include="CompanyProfilePoco.cs" />
