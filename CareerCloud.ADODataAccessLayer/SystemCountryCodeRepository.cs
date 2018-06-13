@@ -9,7 +9,7 @@ using CareerCloud.Pocos;
 
 namespace CareerCloud.ADODataAccessLayer
 {
-    public class SystemCountryCodeRepository : IDataRepository<SystemCountryCodePoco>
+    public class SystemCountryCodeRepository : BaseADO, IDataRepository<SystemCountryCodePoco>
     {
         public IList<SystemCountryCodePoco> GetAll(params Expression<Func<SystemCountryCodePoco, object>>[] navigationProperties)
         {
