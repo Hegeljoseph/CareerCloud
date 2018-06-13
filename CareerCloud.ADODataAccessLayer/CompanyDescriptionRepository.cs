@@ -16,7 +16,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             CompanyDescriptionPoco[] pocos = new CompanyDescriptionPoco[1000];
             SqlConnection conn = new SqlConnection(_connstring);
-            ;
+            
             using (conn)
             {
                 SqlCommand cmd = new SqlCommand();
