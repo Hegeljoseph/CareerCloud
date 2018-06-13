@@ -44,7 +44,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<SecurityRolePoco> GetList(Expression<Func<SecurityRolePoco, bool>> @where, params Expression<Func<SecurityRolePoco, object>>[] navigationProperties)
         {
-            throw new NotImplementedException();
+            IQueryable<SecurityRolePoco> pocos = GetAll().AsQueryable();
+            return pocos.Where(where).ToList();
         }
 
         public SecurityRolePoco GetSingle(Expression<Func<SecurityRolePoco, bool>> @where, params Expression<Func<SecurityRolePoco, object>>[] navigationProperties)

@@ -44,8 +44,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<SystemLanguageCodePoco> GetList(Expression<Func<SystemLanguageCodePoco, bool>> @where, params Expression<Func<SystemLanguageCodePoco, object>>[] navigationProperties)
         {
-            throw new NotImplementedException();
-
+            IQueryable<SystemLanguageCodePoco> pocos = GetAll().AsQueryable();
+            return pocos.Where(where).ToList();
         }
 
         public SystemLanguageCodePoco GetSingle(Expression<Func<SystemLanguageCodePoco, bool>> @where, params Expression<Func<SystemLanguageCodePoco, object>>[] navigationProperties)

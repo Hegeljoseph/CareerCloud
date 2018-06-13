@@ -49,7 +49,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<ApplicantSkillPoco> GetList(Expression<Func<ApplicantSkillPoco, bool>> @where, params Expression<Func<ApplicantSkillPoco, object>>[] navigationProperties)
         {
-            throw new NotImplementedException();
+            IQueryable<ApplicantSkillPoco> pocos = GetAll().AsQueryable();
+            return pocos.Where(where).ToList();
         }
 
         public ApplicantSkillPoco GetSingle(Expression<Func<ApplicantSkillPoco, bool>> @where, params Expression<Func<ApplicantSkillPoco, object>>[] navigationProperties)

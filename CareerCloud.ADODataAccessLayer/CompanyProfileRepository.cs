@@ -49,7 +49,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<CompanyProfilePoco> GetList(Expression<Func<CompanyProfilePoco, bool>> @where, params Expression<Func<CompanyProfilePoco, object>>[] navigationProperties)
         {
-            throw new NotImplementedException();
+            IQueryable<CompanyProfilePoco> pocos = GetAll().AsQueryable();
+            return pocos.Where(where).ToList();
         }
 
         public CompanyProfilePoco GetSingle(Expression<Func<CompanyProfilePoco, bool>> @where, params Expression<Func<CompanyProfilePoco, object>>[] navigationProperties)
@@ -100,8 +101,8 @@ namespace CareerCloud.ADODataAccessLayer
                         SET Registration_Date = @Registration_Date,
                         Company_Website = @Company_Website,
                         Contact_Phone = @Contact_Phone,
-                        Contact_Name = @Company_Website,
-                        Company_Logo = @Company_Website
+                        Contact_Name = @Contact_Name,
+                        Company_Logo = @Company_Logo
                         WHERE ID = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
@@ -109,11 +110,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.Parameters.AddWithValue("@Company_Website", poco.CompanyWebsite);
                     cmd.Parameters.AddWithValue("@Contact_Phone", poco.ContactPhone);
                     cmd.Parameters.AddWithValue("@Contact_Name", poco.ContactName);
-
-                    //cmd.Parameters.AddWithValue("@Company_Logo", poco.CompanyLogo);
-                    //SqlParameter paramCompanyLogo = new SqlParameter("@Company_Logo", SqlDbType.Binary, poco.CompanyLogo.Length);
-                    //paramCompanyLogo.Value = poco.CompanyLogo;// red line here
-                    //cmd.Parameters.Add(paramCompanyLogo);
+                    cmd.Parameters.AddWithValue("@Company_Logo", poco.CompanyLogo);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
