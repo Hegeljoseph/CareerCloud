@@ -14,7 +14,7 @@ namespace CareerCloud.ADODataAccessLayer
     {
         public IList<CompanyJobSkillPoco> GetAll(params Expression<Func<CompanyJobSkillPoco, object>>[] navigationProperties)
         {
-            CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[1000];
+            CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[10000];
             SqlConnection conn = new SqlConnection(_connstring);
 
             using (conn)
@@ -65,7 +65,7 @@ namespace CareerCloud.ADODataAccessLayer
 
             foreach (CompanyJobSkillPoco poco in items)
             {
-                cmd.CommandText = @"INSERT INTO Company_Jobs_Skills 
+                cmd.CommandText = @"INSERT INTO Company_Job_Skills 
                     (Id,Job,Skill,Skill_Level,Importance)
                     VALUES
                     (@Id,@Job,@Skill,@Skill_Level,@Importance)";
@@ -92,7 +92,7 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
                 foreach (CompanyJobSkillPoco poco in items)
                 {
-                    cmd.CommandText = @"UPDATE Company_Jobs_Skills
+                    cmd.CommandText = @"UPDATE Company_Job_Skills
                         SET Job = @Job,
                         Skill = @Skill,
                         Skill_Level = @Skill_Level,
@@ -122,7 +122,7 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
                 foreach (CompanyJobSkillPoco poco in items)
                 {
-                    cmd.CommandText = @"DELETE FROM Company_Jobs_Skills
+                    cmd.CommandText = @"DELETE FROM Company_Job_Skills
                         WHERE ID = @Id";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
 

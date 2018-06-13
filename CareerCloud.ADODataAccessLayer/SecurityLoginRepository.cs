@@ -34,15 +34,15 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Login = reader.GetString(1);
                     poco.Password = reader.GetString(2);
                     poco.Created = reader.GetDateTime(3);
-                    poco.PasswordUpdate = reader.GetDateTime(4);
-                    poco.AgreementAccepted = reader.GetDateTime(5);
+                    poco.PasswordUpdate = reader.IsDBNull(4) ? null : (DateTime?)reader[4];
+                    poco.AgreementAccepted = reader.IsDBNull(5) ? null : (DateTime?)reader[5];
                     poco.IsLocked = reader.GetBoolean(6);
                     poco.IsInactive = reader.GetBoolean(7);
                     poco.EmailAddress = reader.GetString(8);
-                    poco.PhoneNumber = reader.GetString(9);
-                    poco.FullName = reader.GetString(10);
+                    poco.PhoneNumber = reader.IsDBNull(9) ? null : (string)reader[9];
+                    poco.FullName = reader.IsDBNull(10) ? null : (string)reader[10];
                     poco.ForceChangePassword = reader.GetBoolean(11);
-                    poco.PrefferredLanguage = reader.GetString(12);
+                    poco.PrefferredLanguage = reader.IsDBNull(12) ? null : (string)reader[12];
                     pocos[position++] = poco;
                 }
 
@@ -73,27 +73,28 @@ namespace CareerCloud.ADODataAccessLayer
             foreach (SecurityLoginPoco poco in items)
             {
                 cmd.CommandText = @"INSERT INTO Security_Logins 
-                    (Id,Login,Password,Created_Date, Password_Update,
-                    Agreement_Accepted, Is_Locked, Is_Inactive, 
+                    (Id,Login,Password,Created_Date, Password_Update_Date,
+                    Agreement_Accepted_Date, Is_Locked, Is_Inactive, 
                     Email_Address, Phone_Number, Full_Name,
-                    Force_Change_Password, Preferred_Language)           
+                    Force_Change_Password, Prefferred_Language)           
                     VALUES
                     (@Id,@Login,@Password,@Created_Date,
-                    @Password_Update,@Agreement_Accepted,@Is_Locked,
+                    @Password_Update_Date,@Agreement_Accepted_Date,@Is_Locked,
                     @Is_Inactive,@Email_Address, @Phone_Number, 
-                    @Full_Name, @Force_Change_Password,@Preferred_Language)";
+                    @Full_Name, @Force_Change_Password,@Prefferred_Language)";
                 cmd.Parameters.AddWithValue("@Id", poco.Id);
                 cmd.Parameters.AddWithValue("@Login", poco.Login);
                 cmd.Parameters.AddWithValue("@Password", poco.Password);
-                cmd.Parameters.AddWithValue("@Password_Update", poco.PasswordUpdate);
-                cmd.Parameters.AddWithValue("@Agreement_Accepted", poco.AgreementAccepted);
+                cmd.Parameters.AddWithValue("@Created_Date", poco.Created);
+                cmd.Parameters.AddWithValue("@Password_Update_Date", poco.PasswordUpdate);
+                cmd.Parameters.AddWithValue("@Agreement_Accepted_Date", poco.AgreementAccepted);
                 cmd.Parameters.AddWithValue("@Is_Locked", poco.IsLocked);
                 cmd.Parameters.AddWithValue("@Is_Inactive", poco.IsInactive);
                 cmd.Parameters.AddWithValue("@Email_Address", poco.EmailAddress);
                 cmd.Parameters.AddWithValue("@Phone_Number", poco.PhoneNumber);
                 cmd.Parameters.AddWithValue("@Full_Name", poco.FullName);
                 cmd.Parameters.AddWithValue("@Force_Change_Password", poco.ForceChangePassword);
-                cmd.Parameters.AddWithValue("@Preferred_Language", poco.PrefferredLanguage);
+                cmd.Parameters.AddWithValue("@Prefferred_Language", poco.PrefferredLanguage);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -114,29 +115,31 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"UPDATE Security_Logins
                         SET Login = @Login,
                         Password = @Password,
-                        Password_Update = @Password_Update,
-                        Agreement_Accepted = @Agreement_Accepted,
+                        Created_Date = @Created_Date,
+                        Password_Update_Date = @Password_Update_Date,
+                        Agreement_Accepted_Date = @Agreement_Accepted_Date,
                         Is_Locked = @Is_Locked,
                         Is_Inactive = @Is_Inactive,
                         Email_Address = @Email_Address,
                         Phone_Number = @Phone_Number,
                         Full_Name = @Full_Name,
                         Force_Change_Password = @Force_Change_Password,
-                        Preferred_Language = @Preferred_Language
+                        Prefferred_Language = @Prefferred_Language
                         WHERE ID = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Login", poco.Login);
                     cmd.Parameters.AddWithValue("@Password", poco.Password);
-                    cmd.Parameters.AddWithValue("@Password_Update", poco.PasswordUpdate);
-                    cmd.Parameters.AddWithValue("@Agreement_Accepted", poco.AgreementAccepted);
+                    cmd.Parameters.AddWithValue("@Created_Date", poco.Created);
+                    cmd.Parameters.AddWithValue("@Password_Update_Date", poco.PasswordUpdate);
+                    cmd.Parameters.AddWithValue("@Agreement_Accepted_Date", poco.AgreementAccepted);
                     cmd.Parameters.AddWithValue("@Is_Locked", poco.IsLocked);
                     cmd.Parameters.AddWithValue("@Is_Inactive", poco.IsInactive);
                     cmd.Parameters.AddWithValue("@Email_Address", poco.EmailAddress);
                     cmd.Parameters.AddWithValue("@Phone_Number", poco.PhoneNumber);
                     cmd.Parameters.AddWithValue("@Full_Name", poco.FullName);
                     cmd.Parameters.AddWithValue("@Force_Change_Password", poco.ForceChangePassword);
-                    cmd.Parameters.AddWithValue("@Preferred_Language", poco.PrefferredLanguage);
+                    cmd.Parameters.AddWithValue("@Prefferred_Language", poco.PrefferredLanguage);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();

@@ -14,7 +14,7 @@ namespace CareerCloud.ADODataAccessLayer
     {
         public IList<SecurityLoginsLogPoco> GetAll(params Expression<Func<SecurityLoginsLogPoco, object>>[] navigationProperties)
         {
-            SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[1000];
+            SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[5000];
             SqlConnection conn = new SqlConnection(_connstring);
 
             using (conn)
@@ -91,7 +91,7 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
                 foreach (SecurityLoginsLogPoco poco in items)
                 {
-                    cmd.CommandText = @"UPDATE Company_Jobs_Descriptions
+                    cmd.CommandText = @"UPDATE Security_Logins_Log
                         SET Login = @Login,
                         Source_IP = @Source_IP,
                         Logon_Date = @Logon_Date,

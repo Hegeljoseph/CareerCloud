@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
@@ -32,10 +33,10 @@ namespace CareerCloud.ADODataAccessLayer
                     CompanyProfilePoco poco = new CompanyProfilePoco();
                     poco.Id = reader.GetGuid(0);
                     poco.RegistrationDate = reader.GetDateTime(1);
-                    poco.CompanyWebsite = reader.GetString(2);
+                    poco.CompanyWebsite = reader.IsDBNull(2) ? null : (string)reader[2];
                     poco.ContactPhone = reader.GetString(3);
-                    poco.ContactName = reader.GetString(4);
-                    poco.CompanyLogo = (byte[])reader[5];
+                    poco.ContactName = reader.IsDBNull(4) ? null : (string)reader[4];
+                    poco.CompanyLogo = reader.IsDBNull(5) ? null : (byte[])reader[5];
                     poco.TimeStamp = (byte[])reader[6];
                     pocos[position++] = poco;
                 }
@@ -108,7 +109,11 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.Parameters.AddWithValue("@Company_Website", poco.CompanyWebsite);
                     cmd.Parameters.AddWithValue("@Contact_Phone", poco.ContactPhone);
                     cmd.Parameters.AddWithValue("@Contact_Name", poco.ContactName);
-                    cmd.Parameters.AddWithValue("@Company_Logo", poco.CompanyLogo);
+
+                    //cmd.Parameters.AddWithValue("@Company_Logo", poco.CompanyLogo);
+                    //SqlParameter paramCompanyLogo = new SqlParameter("@Company_Logo", SqlDbType.Binary, poco.CompanyLogo.Length);
+                    //paramCompanyLogo.Value = poco.CompanyLogo;// red line here
+                    //cmd.Parameters.Add(paramCompanyLogo);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();

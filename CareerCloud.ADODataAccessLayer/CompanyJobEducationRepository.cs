@@ -15,14 +15,14 @@ namespace CareerCloud.ADODataAccessLayer
         public IList<CompanyJobEducationPoco> GetAll(
             params Expression<Func<CompanyJobEducationPoco, object>>[] navigationProperties)
         {
-            CompanyJobEducationPoco[] pocos = new CompanyJobEducationPoco[1000];
+            CompanyJobEducationPoco[] pocos = new CompanyJobEducationPoco[5000];
             SqlConnection conn = new SqlConnection(_connstring);
 
             using (conn)
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = "SELECT * FROM Company_Jobs_Educations";
+                cmd.CommandText = "SELECT * FROM Company_Job_Educations";
 
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -65,7 +65,7 @@ namespace CareerCloud.ADODataAccessLayer
 
             foreach (CompanyJobEducationPoco poco in items)
             {
-                cmd.CommandText = @"INSERT INTO Company_Jobs_Educations 
+                cmd.CommandText = @"INSERT INTO Company_Job_Educations 
                     (Id,Job,Major,Importance)
                     VALUES
                     (@Id,@Job,@Major,@Importance)";
@@ -91,7 +91,7 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
                 foreach (CompanyJobEducationPoco poco in items)
                 {
-                    cmd.CommandText = @"UPDATE Company_Jobs_Educations
+                    cmd.CommandText = @"UPDATE Company_Job_Educations
                         SET Job = @Job,
                         Major = @Major,
                         Importance = @Importance

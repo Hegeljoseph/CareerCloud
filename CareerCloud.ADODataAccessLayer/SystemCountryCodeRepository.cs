@@ -86,7 +86,7 @@ namespace CareerCloud.ADODataAccessLayer
                 foreach (SystemCountryCodePoco poco in items)
                 {
                     cmd.CommandText = @"UPDATE System_Country_Codes
-                        SET Name = @Name,
+                        SET Name = @Name
                         WHERE Code = @Code";
 
                     cmd.Parameters.AddWithValue("@Name", poco.Name);
@@ -110,7 +110,7 @@ namespace CareerCloud.ADODataAccessLayer
                 foreach (SystemCountryCodePoco poco in items)
                 {
                     cmd.CommandText = @"DELETE FROM System_Country_Codes
-                        WHERE ID = @Id";
+                        WHERE Code = @Code";
                     cmd.Parameters.AddWithValue("@Code", poco.Code);
 
                     conn.Open();

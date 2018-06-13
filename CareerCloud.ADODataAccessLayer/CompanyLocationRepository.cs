@@ -33,10 +33,10 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Id = reader.GetGuid(0);
                     poco.Company = reader.GetGuid(1);
                     poco.CountryCode = reader.GetString(2);
-                    poco.Province = reader.GetString(3);
-                    poco.Street = reader.GetString(4);
-                    poco.City = reader.GetString(5);
-                    poco.PostalCode = reader.GetString(6);
+                    poco.Province = reader.IsDBNull(3) ? null : (string)reader[3];
+                    poco.Street = reader.IsDBNull(4) ? null : (string)reader[4];
+                    poco.City = reader.IsDBNull(5) ? null : (string)reader[5];
+                    poco.PostalCode = reader.IsDBNull(6) ? null : (string)reader[6];
                     poco.TimeStamp = (byte[])reader[7];
                     pocos[position++] = poco;
                 }
@@ -71,7 +71,7 @@ namespace CareerCloud.ADODataAccessLayer
                     (Id,Company,Country_Code,State_Province_Code, 
                     Street_Address, City_Town,Zip_Postal_Code)
                     VALUES
-                    (@Id,@Company,@Country_Code,@State_Province_Code
+                    (@Id,@Company,@Country_Code,@State_Province_Code,
                     @Street_Address,@City_Town,@Zip_Postal_Code)";
 
                 cmd.Parameters.AddWithValue("@Id", poco.Id);
@@ -101,7 +101,6 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"UPDATE Company_Locations
                         SET Company = @Company,
                         Country_Code = @Country_Code,
-                        Job_Descriptions = @Job_Descriptions,
                         State_Province_Code = @State_Province_Code,
                         Street_Address = @Street_Address,
                         City_Town = @City_Town,
