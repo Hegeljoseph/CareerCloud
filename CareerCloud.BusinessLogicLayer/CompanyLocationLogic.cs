@@ -32,6 +32,11 @@ namespace CareerCloud.BusinessLogicLayer
 
             foreach (CompanyLocationPoco poco in pocos)
             {
+                if (String.IsNullOrEmpty(poco.CountryCode))
+                {
+                    exceptions.Add(new ValidationException(500, $"CountryCode cannot be empty - {poco.Id}"));
+                }
+
                 if (String.IsNullOrEmpty(poco.Province))
                 {
                     exceptions.Add(new ValidationException(501, $"Province cannot be empty - {poco.Id}"));
@@ -40,6 +45,16 @@ namespace CareerCloud.BusinessLogicLayer
                 if (String.IsNullOrEmpty(poco.Street))
                 {
                     exceptions.Add(new ValidationException(502, $"Street cannot be empty  - {poco.Id}"));
+                }
+
+                if (String.IsNullOrEmpty(poco.City))
+                {
+                    exceptions.Add(new ValidationException(503, $"City cannot be empty  - {poco.Id}"));
+                }
+
+                if (String.IsNullOrEmpty(poco.PostalCode))
+                {
+                    exceptions.Add(new ValidationException(504, $"PostalCode  cannot be empty  - {poco.Id}"));
                 }
             }
 

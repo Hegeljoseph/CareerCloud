@@ -32,11 +32,15 @@ namespace CareerCloud.BusinessLogicLayer
 
             foreach (CompanyProfilePoco poco in pocos)
             {
-                if (!(poco.CompanyWebsite.EndsWith(".ca") ||
-                    poco.CompanyWebsite.EndsWith(".com")||
-                    poco.CompanyWebsite.EndsWith(".biz")))
+                if (!String.IsNullOrEmpty(poco.CompanyWebsite))
                 {
-                    exceptions.Add(new ValidationException(600, $"Valid websites must end with the following extensions – \".ca\", \".com\", \".biz\" - {poco.Id}"));
+                    if (!(poco.CompanyWebsite.EndsWith(".ca") ||
+                          poco.CompanyWebsite.EndsWith(".com") ||
+                          poco.CompanyWebsite.EndsWith(".biz")))
+                    {
+                        exceptions.Add(new ValidationException(600,
+                            $"Valid websites must end with the following extensions – \".ca\", \".com\", \".biz\" - {poco.Id}"));
+                    }
                 }
 
                 string invalidContactPhoneErr = String.Format("Must correspond to a valid phone number (e.g. 416-555-1234) - " + poco.Id);
