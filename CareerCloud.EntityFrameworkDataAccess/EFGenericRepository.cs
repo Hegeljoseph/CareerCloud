@@ -11,9 +11,9 @@ namespace CareerCloud.EntityFrameworkDataAccess
     {
         private CareerCloudContext _context;
 
-        public EFGenericRepository()
+        public EFGenericRepository(bool createProxy = true)
         {
-            _context = new CareerCloudContext();
+            _context = new CareerCloudContext(createProxy);
         }
 
         public IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
