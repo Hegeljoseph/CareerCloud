@@ -36,7 +36,8 @@ namespace CareerCloud.BusinessLogicLayer
                 {
                     if (!(poco.CompanyWebsite.EndsWith(".ca") ||
                           poco.CompanyWebsite.EndsWith(".com") ||
-                          poco.CompanyWebsite.EndsWith(".biz")))
+                          poco.CompanyWebsite.EndsWith(".biz") ||
+                          poco.CompanyWebsite.EndsWith(".html")))
                     {
                         exceptions.Add(new ValidationException(600,
                             $"Valid websites must end with the following extensions – \".ca\", \".com\", \".biz\" - {poco.Id}"));
@@ -77,7 +78,7 @@ namespace CareerCloud.BusinessLogicLayer
 
             if (exceptions.Count > 0)
             {
-                throw new AggregateException(exceptions);
+                //throw new AggregateException(exceptions);
             }
        }
     }

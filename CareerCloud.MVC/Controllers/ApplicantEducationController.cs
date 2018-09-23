@@ -92,7 +92,6 @@ namespace CareerCloud.MVC.Controllers
             if (ModelState.IsValid)
             {
                 logic.Update(new[] { applicantEducationPoco });
-
                 return RedirectToAction("Index");
             }
             return View(applicantEducationPoco);
@@ -120,6 +119,7 @@ namespace CareerCloud.MVC.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             ApplicantEducationPoco applicantEducationPoco = logic.Get(id);
+            logic.Delete(new [] { applicantEducationPoco });
             return RedirectToAction("Index");
         }
     }

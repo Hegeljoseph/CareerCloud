@@ -12,8 +12,11 @@
 </p>
 <table class="table">
     <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.RegistrationDate)
+            </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.RegistrationDate)
+            @Html.DisplayNameFor(model => model.CompanyDescriptions.Where(cd => cd.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CompanyWebsite)
@@ -27,38 +30,40 @@
         <th>
             @Html.DisplayNameFor(model => model.CompanyLogo)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeStamp)
-        </th>
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegistrationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyWebsite)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactPhone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyLogo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeStamp)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.RegistrationDate)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyDescriptions.Where(cd => cd.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyWebsite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyLogo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

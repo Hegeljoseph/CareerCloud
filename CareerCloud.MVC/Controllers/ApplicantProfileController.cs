@@ -6,6 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CareerCloud.BusinessLogicLayer;
+using CareerCloud.DataAccessLayer;
+using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.MVC.Models;
 using CareerCloud.Pocos;
 
@@ -13,12 +16,17 @@ namespace CareerCloud.MVC.Controllers
 {
     public class ApplicantProfileController : Controller
     {
-        private CareerCloudMVCContext db = new CareerCloudMVCContext();
+        private ApplicantProfileLogic logic;
 
+        public ApplicantProfileController()
+        {
+            IDataRepository<ApplicantProfilePoco> repo = new EFGenericRepository<ApplicantProfilePoco>();
+            logic = new ApplicantProfileLogic(repo);
+        }
         // GET: ApplicantProfile
         public ActionResult Index()
         {
-            return View(db.ApplicantProfilePocoes.ToList());
+            return View(logic.GetAll());
         }
 
         // GET: ApplicantProfile/Details/5
@@ -28,7 +36,7 @@ namespace CareerCloud.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicantProfilePoco applicantProfilePoco = db.ApplicantProfilePocoes.Find(id);
+            ApplicantProfilePoco applicantProfilePoco = logic.Get(id.Value);
             if (applicantProfilePoco == null)
             {
                 return HttpNotFound();
@@ -52,8 +60,7 @@ namespace CareerCloud.MVC.Controllers
             if (ModelState.IsValid)
             {
                 applicantProfilePoco.Id = Guid.NewGuid();
-                db.ApplicantProfilePocoes.Add(applicantProfilePoco);
-                db.SaveChanges();
+                logic.Add(new[] { applicantProfilePoco });
                 return RedirectToAction("Index");
             }
 
@@ -67,7 +74,7 @@ namespace CareerCloud.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicantProfilePoco applicantProfilePoco = db.ApplicantProfilePocoes.Find(id);
+            ApplicantProfilePoco applicantProfilePoco = logic.Get(id.Value);
             if (applicantProfilePoco == null)
             {
                 return HttpNotFound();
@@ -84,8 +91,7 @@ namespace CareerCloud.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(applicantProfilePoco).State = EntityState.Modified;
-                db.SaveChanges();
+                logic.Update(new[] { applicantProfilePoco });
                 return RedirectToAction("Index");
             }
             return View(applicantProfilePoco);
@@ -98,7 +104,7 @@ namespace CareerCloud.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicantProfilePoco applicantProfilePoco = db.ApplicantProfilePocoes.Find(id);
+            ApplicantProfilePoco applicantProfilePoco = logic.Get(id.Value);
             if (applicantProfilePoco == null)
             {
                 return HttpNotFound();
@@ -111,19 +117,9 @@ namespace CareerCloud.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            ApplicantProfilePoco applicantProfilePoco = db.ApplicantProfilePocoes.Find(id);
-            db.ApplicantProfilePocoes.Remove(applicantProfilePoco);
-            db.SaveChanges();
+            ApplicantProfilePoco applicantProfilePoco = logic.Get(id);
+            logic.Delete(new[] { applicantProfilePoco });
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

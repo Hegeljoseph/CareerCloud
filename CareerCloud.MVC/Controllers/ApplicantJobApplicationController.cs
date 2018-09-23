@@ -6,6 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CareerCloud.BusinessLogicLayer;
+using CareerCloud.DataAccessLayer;
+using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.MVC.Models;
 using CareerCloud.Pocos;
 
@@ -13,12 +16,18 @@ namespace CareerCloud.MVC.Controllers
 {
     public class ApplicantJobApplicationController : Controller
     {
-        private CareerCloudMVCContext db = new CareerCloudMVCContext();
+        private ApplicantJobApplicationLogic logic;
+
+        public ApplicantJobApplicationController()
+        {
+            IDataRepository<ApplicantJobApplicationPoco> repo = new EFGenericRepository<ApplicantJobApplicationPoco>();
+            logic = new ApplicantJobApplicationLogic(repo);
+        }
 
         // GET: ApplicantJobApplication
         public ActionResult Index()
         {
-            return View(db.ApplicantJobApplicationPocoes.ToList());
+            return View(logic.GetAll());
         }
 
         // GET: ApplicantJobApplication/Details/5
@@ -28,7 +37,7 @@ namespace CareerCloud.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicantJobApplicationPoco applicantJobApplicationPoco = db.ApplicantJobApplicationPocoes.Find(id);
+            ApplicantJobApplicationPoco applicantJobApplicationPoco = logic.Get(id.Value);
             if (applicantJobApplicationPoco == null)
             {
                 return HttpNotFound();
@@ -52,8 +61,7 @@ namespace CareerCloud.MVC.Controllers
             if (ModelState.IsValid)
             {
                 applicantJobApplicationPoco.Id = Guid.NewGuid();
-                db.ApplicantJobApplicationPocoes.Add(applicantJobApplicationPoco);
-                db.SaveChanges();
+                logic.Add(new[] { applicantJobApplicationPoco });
                 return RedirectToAction("Index");
             }
 
@@ -67,7 +75,7 @@ namespace CareerCloud.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicantJobApplicationPoco applicantJobApplicationPoco = db.ApplicantJobApplicationPocoes.Find(id);
+            ApplicantJobApplicationPoco applicantJobApplicationPoco = logic.Get(id.Value);
             if (applicantJobApplicationPoco == null)
             {
                 return HttpNotFound();
@@ -84,8 +92,7 @@ namespace CareerCloud.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(applicantJobApplicationPoco).State = EntityState.Modified;
-                db.SaveChanges();
+                logic.Update(new[] { applicantJobApplicationPoco });
                 return RedirectToAction("Index");
             }
             return View(applicantJobApplicationPoco);
@@ -98,7 +105,7 @@ namespace CareerCloud.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicantJobApplicationPoco applicantJobApplicationPoco = db.ApplicantJobApplicationPocoes.Find(id);
+            ApplicantJobApplicationPoco applicantJobApplicationPoco = logic.Get(id.Value);
             if (applicantJobApplicationPoco == null)
             {
                 return HttpNotFound();
@@ -111,19 +118,9 @@ namespace CareerCloud.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            ApplicantJobApplicationPoco applicantJobApplicationPoco = db.ApplicantJobApplicationPocoes.Find(id);
-            db.ApplicantJobApplicationPocoes.Remove(applicantJobApplicationPoco);
-            db.SaveChanges();
+            ApplicantJobApplicationPoco applicantJobApplicationPoco = logic.Get(id);
+            logic.Delete(new[] { applicantJobApplicationPoco });
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
